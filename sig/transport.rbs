@@ -1,0 +1,29 @@
+class PicoTelemetry
+  module Transport
+    class Error < StandardError
+    end
+    class ConnectionError < Error
+    end
+    class TimeoutError < Error
+    end
+    class ProtocolError < Error
+    end
+    class UnsupportedError < Error
+    end
+    def self.classify_http_status: (Integer status) -> Symbol
+    class Response
+      attr_reader status: Integer
+      attr_reader body: String
+      attr_reader headers: untyped
+    end
+    class TCP
+      def initialize: (host: String, port: Integer, ?connect_timeout_ms: Integer, ?io_timeout_ms: Integer) -> void
+      def read_exact: (untyped io, Integer length) -> String
+    end
+    class HTTP
+      def initialize: (base_url: String, ?ca_file: String?, ?verify: bool, ?open_timeout_ms: Integer, ?read_timeout_ms: Integer, ?max_body_bytes: Integer) -> void
+      def post: (String path, String body, ?Hash[String, String]? headers) -> Response
+      def get: (String path, ?Hash[String, String]? headers) -> Response
+    end
+  end
+end
